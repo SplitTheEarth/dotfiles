@@ -13,11 +13,11 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:System San Francisco Display 13
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:System San Francisco Display 11
+font pango:pango 13
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -33,6 +33,11 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
+
+# --- GAPS (yay) --- #
+gaps inner 15
+gaps outer 15
+#smart_gaps on
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -191,27 +196,27 @@ set $urgent-bg-color     #E53935
 
 # window colors
 #                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color          $text-color          #00ff00
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
-client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
+client.focused          $bg-color           $bg-color          $text-color          $bgcolor
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $bgcolor
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $bgcolor
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $bgcolor
 
-hide_edge_borders both
+
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-        status_command i3blocks -c ~/.i3/i3blocks.conf
-	position top
-	colors {
-		background $bg-color
-	    	separator #757575
-		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
-		}
-}
+#bar {
+#        status_command i3blocks -c ~/.i3/i3blocks.conf
+#	position top
+#	colors {
+#		background $bg-color
+#	    	separator #757575
+#		#                  border             background         text
+#		focused_workspace  $bg-color          $bg-color          $text-color
+#		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+#		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+#		}
+#}
 
 
 
@@ -220,4 +225,7 @@ bindsym $mod+shift+x exec i3lock
 
 #always run
 exec_always feh --bg-scale Pictures/wallpaper.jpg
-exec_always xrand --output Virtual-1 --primary --mode 1440x900 --pos 0x0 --rotate normal --output Virtual-2 --off --output Virtual-3 --off --output Virtual-4 --off --output Virtual-5 --off --output Virtual-6 --off --output Virtual-7 --off --output Virtual-8 --off
+exec_always xrandr --output DVI-D-0 --off --output HDMI-0 --mode 1920x1080 --pos 0x157 --rotate normal --output DP-0 --primary --mode 1920x1080 --rate 144.00 --pos 1920x0 --rotate normal --output DP-1 --off
+exec_always picom -b
+exec polybar main
+exec polybar secondary
